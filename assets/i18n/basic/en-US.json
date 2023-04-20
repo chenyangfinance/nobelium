@@ -2,6 +2,8 @@
   "NAV": {
     "INDEX": "Blog",
     "RESEARCH": "Research",
+    "CODES": "Codes",
+    "LINKS": "Links"
     "SEARCH": "Search",
     "ABOUT": "About"
   },
