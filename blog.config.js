@@ -38,13 +38,13 @@ const BLOG = {
   },
   comment: {
     // support provider: gitalk, utterances, cusdis
-    provider: '', // leave it empty if you don't need any comment plugin
+    provider: 'gitalk', // leave it empty if you don't need any comment plugin
     gitalkConfig: {
-      repo: '', // The repository of store comments
-      owner: '',
-      admin: [],
-      clientID: '',
-      clientSecret: '',
+      repo: 'https://github.com/chenyangfinance/websitecomments', // The repository of store comments
+      owner: 'chenyangfinance',
+      admin: [chenyangfinance],
+      clientID: '777d7cd76a1a2cf9d7e4',
+      clientSecret: '94164cc90d4763e39536746cfc743fe1d1bdc0d0',
       distractionFreeMode: false
     },
     utterancesConfig: {
