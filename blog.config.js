@@ -1,7 +1,7 @@
 const BLOG = {
   title: 'Chen Yang',
   author: 'Chen Yang',
-  email: 'chenyangfinance@gmail.com',
+  email: 'chenyoung0612@gmail.com',
   link: 'https://www.chenyangfinance.com',
   description: 'Better Finance',
   lang: 'en-US', // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
