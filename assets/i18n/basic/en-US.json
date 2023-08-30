@@ -2,11 +2,10 @@
   "NAV": {
     "INDEX": "Blog",
     "RESEARCH": "Research",
-    "CODES": "Codes",
-    "LINKS": "Links",
     "SEARCH": "Search",
     "PHOTOS": "Photos",
-    "ABOUT": "About"
+    "ABOUT": "About",
+    "CN": "中文"
   },
   "PAGINATION": {
     "PREV": "Prev",
