@@ -12,9 +12,10 @@ const NavBar = () => {
     { id: 0, name: locale.NAV.INDEX, to: BLOG.path || '/', show: true },
     { id: 1, name: locale.NAV.ABOUT, to: '/about', show: BLOG.showAbout },
     { id: 2, name: locale.NAV.RESEARCH, to: '/research', show: true },
-    { id: 3, name: locale.NAV.PHOTOS, to: '/photos', show: true },
-    { id: 4, name: locale.NAV.SEARCH, to: '/search', show: true },
-    { id: 5, name: locale.NAV.CN, to: '/cnabout', show: true },
+    { id: 3, name: locale.NAV.TEACHING, to: '/teaching', show: true },
+    { id: 4, name: locale.NAV.PHOTOS, to: '/photos', show: true },
+    { id: 5, name: locale.NAV.SEARCH, to: '/search', show: true },
+    { id: 6, name: locale.NAV.CN, to: '/cnabout', show: true },
   ]
   return (
     <div className="flex-shrink-0">
