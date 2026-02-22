@@ -1,5 +1,4 @@
 import { clientConfig } from '@/lib/server/config'
-
 import { useRouter } from 'next/router'
 import cn from 'classnames'
 import { getAllPosts, getPostBlocks } from '@/lib/notion'
@@ -15,8 +14,8 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
   const BLOG = useConfig()
   const locale = useLocale()
 
-  // TODO: It would be better to render something
-  if (router.isFallback) return null
+  // 如果处于 fallback 状态或没有获取到 post，则不渲染（防止报错）
+  if (router.isFallback || !post) return null
 
   const fullWidth = post.fullWidth ?? false
 
@@ -72,27 +71,47 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
 
 export async function getStaticPaths () {
   const posts = await getAllPosts({ includePages: true })
+  
+  // 核心修复 1：增加安全校验。如果 posts 不是数组，则返回空 paths，避免 map 函数报错崩溃
+  const paths = Array.isArray(posts) 
+    ? posts.map(row => `${clientConfig.path}/${row.slug}`) 
+    : []
+
   return {
-    paths: posts.map(row => `${clientConfig.path}/${row.slug}`),
+    paths: paths,
     fallback: true
   }
 }
 
 export async function getStaticProps ({ params: { slug } }) {
-  const posts = await getAllPosts({ includePages: true })
-  const post = posts.find(t => t.slug === slug)
+  try {
+    const posts = await getAllPosts({ includePages: true })
+    
+    // 核心修复 2：如果 posts 为空或者不是数组，直接返回 404
+    if (!posts || !Array.isArray(posts)) {
+      return { notFound: true }
+    }
 
-  if (!post) return { notFound: true }
+    const post = posts.find(t => t?.slug === slug)
 
-  const blockMap = await getPostBlocks(post.id)
-  const emailHash = createHash('md5')
-    .update(clientConfig.email)
-    .digest('hex')
-    .trim()
-    .toLowerCase()
+    if (!post) {
+      return { notFound: true }
+    }
 
-  return {
-    props: { post, blockMap, emailHash },
-    revalidate: 1
+    const blockMap = await getPostBlocks(post.id)
+    const emailHash = createHash('md5')
+      .update(clientConfig.email)
+      .digest('hex')
+      .trim()
+      .toLowerCase()
+
+    return {
+      props: { post, blockMap, emailHash },
+      revalidate: 1
+    }
+  } catch (error) {
+    // 捕获任何潜在的数据请求错误，防止构建中断
+    console.error('Error in getStaticProps:', error)
+    return { notFound: true }
   }
 }
